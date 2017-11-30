@@ -66,6 +66,5 @@
     <Build Include="IssueDetail.sql" />
     <Build Include="Depts.sql" />
     <Build Include="IssueAddInfo.sql" />
-    <Build Include="Constituents.sql" />
   </ItemGroup>
 </Project>

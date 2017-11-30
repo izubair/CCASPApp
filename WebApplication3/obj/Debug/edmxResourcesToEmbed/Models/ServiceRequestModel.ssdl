@@ -1,18 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ServiceRequestDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Constituents">
-    <Key>
-      <PropertyRef Name="ConstituentId" />
-    </Key>
-    <Property Name="ConstituentId" Type="int" Nullable="false" />
-    <Property Name="FirstName" Type="varchar" MaxLength="32" Nullable="false" />
-    <Property Name="MI" Type="varchar" MaxLength="32" />
-    <Property Name="LastName" Type="varchar" MaxLength="32" Nullable="false" />
-    <Property Name="Email" Type="varchar" MaxLength="32" Nullable="false" />
-    <Property Name="Phone" Type="varchar" MaxLength="32" />
-    <Property Name="Address" Type="varchar" MaxLength="64" />
-    <Property Name="Notes" Type="varchar" MaxLength="132" />
-  </EntityType>
   <EntityType Name="Depts">
     <Key>
       <PropertyRef Name="DeptId" />
@@ -50,7 +37,7 @@
     <Key>
       <PropertyRef Name="TicketLocAddId" />
     </Key>
-    <Property Name="TicketLocAddId" Type="int" Nullable="false" />
+    <Property Name="TicketLocAddId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TicketId" Type="int" />
     <Property Name="JurisdictionCode" Type="int" Nullable="false" />
     <Property Name="MinorCivilDiv" Type="int" Nullable="false" />
@@ -64,7 +51,7 @@
     <Key>
       <PropertyRef Name="TicketLocId" />
     </Key>
-    <Property Name="TicketLocId" Type="int" Nullable="false" />
+    <Property Name="TicketLocId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TicketId" Type="int" />
     <Property Name="Latitude" Type="float" Nullable="false" />
     <Property Name="Longitude" Type="float" Nullable="false" />
@@ -83,12 +70,14 @@
     <Key>
       <PropertyRef Name="TicketId" />
     </Key>
-    <Property Name="TicketId" Type="int" Nullable="false" />
-    <Property Name="ConstituentID" Type="int" />
+    <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subject" Type="varchar" MaxLength="132" Nullable="false" />
+    <Property Name="ConstituentID" Type="nvarchar" MaxLength="128" />
     <Property Name="Service" Type="int" Nullable="false" />
     <Property Name="IssueId" Type="int" />
     <Property Name="IssueDetailId" Type="int" />
     <Property Name="IssueAddInfoId" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="256" Nullable="false" />
     <Property Name="DateReported" Type="date" />
     <Property Name="TimeReported" Type="time" Precision="7" />
   </EntityType>
@@ -152,7 +141,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TicketLoc__Ticke__3C69FB99">
+  <Association Name="FK__TicketLoc__Ticke__5DCAEF64">
     <End Role="Tickets" Type="Self.Tickets" Multiplicity="0..1" />
     <End Role="TicketLocAdditional" Type="Self.TicketLocAdditional" Multiplicity="*" />
     <ReferentialConstraint>
@@ -164,7 +153,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TicketLoc__Ticke__3D5E1FD2">
+  <Association Name="FK__TicketLoc__Ticke__5EBF139D">
     <End Role="Tickets" Type="Self.Tickets" Multiplicity="0..1" />
     <End Role="TicketLocation" Type="Self.TicketLocation" Multiplicity="*" />
     <ReferentialConstraint>
@@ -176,19 +165,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Tickets__Constit__403A8C7D">
-    <End Role="Constituents" Type="Self.Constituents" Multiplicity="0..1" />
-    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Constituents">
-        <PropertyRef Name="ConstituentId" />
-      </Principal>
-      <Dependent Role="Tickets">
-        <PropertyRef Name="ConstituentID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Tickets__IssueAd__4316F928">
+  <Association Name="FK__Tickets__IssueAd__628FA481">
     <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="0..1" />
     <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
     <ReferentialConstraint>
@@ -200,7 +177,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Tickets__IssueDe__4222D4EF">
+  <Association Name="FK__Tickets__IssueDe__619B8048">
     <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="0..1" />
     <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
     <ReferentialConstraint>
@@ -212,7 +189,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Tickets__IssueId__412EB0B6">
+  <Association Name="FK__Tickets__IssueId__60A75C0F">
     <End Role="Issues" Type="Self.Issues" Multiplicity="0..1" />
     <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
     <ReferentialConstraint>
@@ -225,7 +202,6 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="ServiceRequestDBModelStoreContainer">
-    <EntitySet Name="Constituents" EntityType="Self.Constituents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Depts" EntityType="Self.Depts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IssueAddInfo" EntityType="Self.IssueAddInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IssueDetail" EntityType="Self.IssueDetail" Schema="dbo" store:Type="Tables" />
@@ -253,27 +229,23 @@
       <End Role="Issues" EntitySet="Issues" />
       <End Role="IssueDetail" EntitySet="IssueDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__TicketLoc__Ticke__3C69FB99" Association="Self.FK__TicketLoc__Ticke__3C69FB99">
+    <AssociationSet Name="FK__TicketLoc__Ticke__5DCAEF64" Association="Self.FK__TicketLoc__Ticke__5DCAEF64">
       <End Role="Tickets" EntitySet="Tickets" />
       <End Role="TicketLocAdditional" EntitySet="TicketLocAdditional" />
     </AssociationSet>
-    <AssociationSet Name="FK__TicketLoc__Ticke__3D5E1FD2" Association="Self.FK__TicketLoc__Ticke__3D5E1FD2">
+    <AssociationSet Name="FK__TicketLoc__Ticke__5EBF139D" Association="Self.FK__TicketLoc__Ticke__5EBF139D">
       <End Role="Tickets" EntitySet="Tickets" />
       <End Role="TicketLocation" EntitySet="TicketLocation" />
     </AssociationSet>
-    <AssociationSet Name="FK__Tickets__Constit__403A8C7D" Association="Self.FK__Tickets__Constit__403A8C7D">
-      <End Role="Constituents" EntitySet="Constituents" />
-      <End Role="Tickets" EntitySet="Tickets" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Tickets__IssueAd__4316F928" Association="Self.FK__Tickets__IssueAd__4316F928">
+    <AssociationSet Name="FK__Tickets__IssueAd__628FA481" Association="Self.FK__Tickets__IssueAd__628FA481">
       <End Role="IssueAddInfo" EntitySet="IssueAddInfo" />
       <End Role="Tickets" EntitySet="Tickets" />
     </AssociationSet>
-    <AssociationSet Name="FK__Tickets__IssueDe__4222D4EF" Association="Self.FK__Tickets__IssueDe__4222D4EF">
+    <AssociationSet Name="FK__Tickets__IssueDe__619B8048" Association="Self.FK__Tickets__IssueDe__619B8048">
       <End Role="IssueDetail" EntitySet="IssueDetail" />
       <End Role="Tickets" EntitySet="Tickets" />
     </AssociationSet>
-    <AssociationSet Name="FK__Tickets__IssueId__412EB0B6" Association="Self.FK__Tickets__IssueId__412EB0B6">
+    <AssociationSet Name="FK__Tickets__IssueId__60A75C0F" Association="Self.FK__Tickets__IssueId__60A75C0F">
       <End Role="Issues" EntitySet="Issues" />
       <End Role="Tickets" EntitySet="Tickets" />
     </AssociationSet>

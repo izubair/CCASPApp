@@ -11,60 +11,42 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Service)
+            @Html.DisplayNameFor(model => model.Subject)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Service)
-        </dd>
-
+            @Html.DisplayFor(model => model.Subject)
+        </dd>        
+        
         <dt>
-            @Html.DisplayNameFor(model => model.DateReported)
+            @Html.DisplayNameFor(model => model.IssueId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateReported)
-        </dd>
+            @Html.DisplayFor(model => model.Issue.Description)
+        </dd>        
 
         <dt>
-            @Html.DisplayNameFor(model => model.TimeReported)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TimeReported)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Constituent.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Constituent.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IssueAddInfo.AdditionalInfo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IssueAddInfo.AdditionalInfo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IssueDetail.Details)
+            @Html.DisplayNameFor(model => model.IssueDetailId)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.IssueDetail.Details)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.Issue.Description)
+            @Html.DisplayNameFor(model => model.IssueAddInfoId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Issue.Description)
-        </dd>
+            @Html.DisplayFor(model => model.IssueAddInfo.AdditionalInfo)
+        </dd> 
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd> 
 
     </dl>
 </div>

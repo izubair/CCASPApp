@@ -86,7 +86,7 @@
       <PropertyRef Name="TicketId" />
     </Key>
     <Property Name="TicketId" Type="Int32" Nullable="false" />
-    <Property Name="ConstituentID" Type="Int32" />
+    <Property Name="ConstituentID" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
     <Property Name="Service" Type="Int32" Nullable="false" />
     <Property Name="IssueId" Type="Int32" />
     <Property Name="IssueDetailId" Type="Int32" />
@@ -95,10 +95,11 @@
     <Property Name="TimeReported" Type="Time" Precision="7" />
     <NavigationProperty Name="TicketLocAdditionals" Relationship="Self.FK__TicketLoc__Ticke__3C69FB99" FromRole="Tickets" ToRole="TicketLocAdditional" />
     <NavigationProperty Name="TicketLocations" Relationship="Self.FK__TicketLoc__Ticke__3D5E1FD2" FromRole="Tickets" ToRole="TicketLocation" />
-    <NavigationProperty Name="Constituent" Relationship="ServiceRequestDBModel.FK__Tickets__Constit__403A8C7D" FromRole="Ticket" ToRole="Constituent" />
     <NavigationProperty Name="IssueAddInfo" Relationship="ServiceRequestDBModel.FK__Tickets__IssueAd__4316F928" FromRole="Ticket" ToRole="IssueAddInfo" />
     <NavigationProperty Name="IssueDetail" Relationship="ServiceRequestDBModel.FK__Tickets__IssueDe__4222D4EF" FromRole="Ticket" ToRole="IssueDetail" />
     <NavigationProperty Name="Issue" Relationship="ServiceRequestDBModel.FK__Tickets__IssueId__412EB0B6" FromRole="Ticket" ToRole="Issue" />
+    <Property Name="Subject" Type="String" Nullable="false" MaxLength="132" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK__IssueAddI__DeptI__398D8EEE">
     <End Role="Depts" Type="Self.Dept" Multiplicity="0..1" />
@@ -220,11 +221,6 @@
       <End Role="Tickets" EntitySet="Tickets" />
       <End Role="TicketLocation" EntitySet="TicketLocations" />
     </AssociationSet>
-    <EntitySet Name="Constituents" EntityType="ServiceRequestDBModel.Constituent" />
-    <AssociationSet Name="FK__Tickets__Constit__403A8C7D" Association="ServiceRequestDBModel.FK__Tickets__Constit__403A8C7D">
-      <End Role="Constituent" EntitySet="Constituents" />
-      <End Role="Ticket" EntitySet="Tickets" />
-    </AssociationSet>
     <AssociationSet Name="FK__Tickets__IssueAd__4316F928" Association="ServiceRequestDBModel.FK__Tickets__IssueAd__4316F928">
       <End Role="IssueAddInfo" EntitySet="IssueAddInfoes" />
       <End Role="Ticket" EntitySet="Tickets" />
@@ -238,32 +234,6 @@
       <End Role="Ticket" EntitySet="Tickets" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Constituent">
-    <Key>
-      <PropertyRef Name="ConstituentId" />
-    </Key>
-    <Property Name="ConstituentId" Type="Int32" Nullable="false" />
-    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="MI" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="LastName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="Phone" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="Notes" Type="String" MaxLength="132" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Tickets" Relationship="ServiceRequestDBModel.FK__Tickets__Constit__403A8C7D" FromRole="Constituent" ToRole="Ticket" />
-  </EntityType>
-  <Association Name="FK__Tickets__Constit__403A8C7D">
-    <End Type="ServiceRequestDBModel.Constituent" Role="Constituent" Multiplicity="0..1" />
-    <End Type="ServiceRequestDBModel.Ticket" Role="Ticket" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Constituent">
-        <PropertyRef Name="ConstituentId" />
-      </Principal>
-      <Dependent Role="Ticket">
-        <PropertyRef Name="ConstituentID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Tickets__IssueAd__4316F928">
     <End Type="ServiceRequestDBModel.IssueAddInfo" Role="IssueAddInfo" Multiplicity="0..1" />
     <End Type="ServiceRequestDBModel.Ticket" Role="Ticket" Multiplicity="*" />

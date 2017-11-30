@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\izubair\Documents\Visual Studio 2017\Projects\WebApplication3\ASPDotNet_Auth_Login\WebApplication3\Models\ServiceRequestModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\ASPDOTNETApps\CCASPApp\WebApplication3\Models\ServiceRequestModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

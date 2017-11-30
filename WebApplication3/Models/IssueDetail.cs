@@ -11,7 +11,8 @@ namespace WebApplication3.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class IssueDetail
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,8 +21,9 @@ namespace WebApplication3.Models
             this.IssueAddInfoes = new HashSet<IssueAddInfo>();
             this.Tickets = new HashSet<Ticket>();
         }
-    
+        [Display(Name = "Issue Details")]
         public int IssueDetailId { get; set; }
+        [Display(Name = "Issue")]
         public Nullable<int> IssueID { get; set; }
         public Nullable<int> DeptID { get; set; }
         public string Details { get; set; }

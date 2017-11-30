@@ -19,8 +19,6 @@
         <AssociationConnector Association="ServiceRequestDBModel.FK__IssueDeta__Issue__3A81B327" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceRequestDBModel.FK__TicketLoc__Ticke__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceRequestDBModel.FK__TicketLoc__Ticke__3D5E1FD2" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ServiceRequestDBModel.Constituent" Width="1.5" PointX="5.375" PointY="8" />
-        <AssociationConnector Association="ServiceRequestDBModel.FK__Tickets__Constit__403A8C7D" />
         <AssociationConnector Association="ServiceRequestDBModel.FK__Tickets__IssueAd__4316F928" />
         <AssociationConnector Association="ServiceRequestDBModel.FK__Tickets__IssueDe__4222D4EF" />
         <AssociationConnector Association="ServiceRequestDBModel.FK__Tickets__IssueId__412EB0B6" />

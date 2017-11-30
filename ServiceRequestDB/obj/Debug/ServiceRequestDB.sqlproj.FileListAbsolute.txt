@@ -10,9 +10,9 @@ C:\Users\izubair\Source\Repos\ServiceRequestDB\ServiceRequestDB\obj\Debug\predep
 C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\bin\Debug\ServiceRequestDB.dacpac
 C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\bin\Debug\ServiceRequestDB.dll
 C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\bin\Debug\ServiceRequestDB.pdb
+C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\obj\Debug\ServiceRequestDB.dll
+C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\obj\Debug\ServiceRequestDB.pdb
 C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\obj\Debug\Model.xml
 C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\obj\Debug\refactor.xml
 C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\obj\Debug\postdeploy.sql
 C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\obj\Debug\predeploy.sql
-C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\obj\Debug\ServiceRequestDB.dll
-C:\ASPDOTNETApps\CCASPApp\ServiceRequestDB\obj\Debug\ServiceRequestDB.pdb

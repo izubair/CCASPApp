@@ -9,41 +9,21 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
-        <h4>Ticket</h4>        
-        
-        <h4>Location: @Session["Message"]</h4>
-       
-        
+        <h4>Ticket</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.TicketId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Subject, "Subject *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TicketId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TicketId, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ConstituentID, "ConstituentID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ConstituentID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ConstituentID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Service, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Service, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Service, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IssueId, "IssueId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IssueId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("IssueId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IssueId, "", new { @class = "text-danger" })
@@ -51,34 +31,26 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IssueDetailId, "IssueDetailId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IssueDetailId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IssueDetailId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.DropDownList("IssueDetailId", null, htmlAttributes: new { @class = "form-control", @disabled="disabled" })
                 @Html.ValidationMessageFor(model => model.IssueDetailId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IssueAddInfoId, "IssueAddInfoId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IssueAddInfoId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("IssueAddInfoId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.IssueAddInfoId, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>       
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DateReported, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateReported, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateReported, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TimeReported, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TimeReported, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TimeReported, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -93,7 +65,6 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
 <script type="text/javascript">
     window.onload = function () {
         $("#IssueId").change(function () {
@@ -162,25 +133,6 @@
 
                 }
             });
-        });        
+        });
     };
 </script>
-
-<!-- 
-<script type="text/javascript">
-$(document).ready(function () {
-   
-        $("#IssueId").change(function () {
-            var val = $(this).val();
-            var subItems="";
-            $.getJSON("@Url.Action("GetIssueDetail","Ticket")", {id:val} ,function (data) {
-              $.each(data,function(index,item){
-                  subItems += "<option value='" + item.IssueDetailId + "'>" + item.Details+"</option>"
-              });
-              $("#IssueDetailId").html(subItems)
-            });       
-    });
-
-    });
-</script>
--->

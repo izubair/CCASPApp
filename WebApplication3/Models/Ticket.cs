@@ -11,7 +11,9 @@ namespace WebApplication3.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Ticket
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,21 +22,33 @@ namespace WebApplication3.Models
             this.TicketLocAdditionals = new HashSet<TicketLocAdditional>();
             this.TicketLocations = new HashSet<TicketLocation>();
         }
-    
+
+        [ScaffoldColumn(false)]
         public int TicketId { get; set; }
-        public Nullable<int> ConstituentID { get; set; }
+        [ScaffoldColumn(false)]
+        public string ConstituentID { get; set; }
+        [ScaffoldColumn(false)]
         public int Service { get; set; }
+        [Display(Name = "Issue")]
         public Nullable<int> IssueId { get; set; }
+        [Display(Name = "Details")]
         public Nullable<int> IssueDetailId { get; set; }
+        [Display(Name = "Additional Information")]
         public Nullable<int> IssueAddInfoId { get; set; }
+        [ScaffoldColumn(false)]
         public Nullable<System.DateTime> DateReported { get; set; }
+        [ScaffoldColumn(false)]
         public Nullable<System.TimeSpan> TimeReported { get; set; }
+        [Display(Name = "Subject")]
+        [Required]
+        public string Subject { get; set; }
+        [Display(Name = "Description")]
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TicketLocAdditional> TicketLocAdditionals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TicketLocation> TicketLocations { get; set; }
-        public virtual Constituent Constituent { get; set; }
         public virtual IssueAddInfo IssueAddInfo { get; set; }
         public virtual IssueDetail IssueDetail { get; set; }
         public virtual Issue Issue { get; set; }

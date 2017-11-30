@@ -76,6 +76,8 @@
     <EntitySetMapping Name="Tickets">
       <EntityTypeMapping TypeName="ServiceRequestDBModel.Ticket">
         <MappingFragment StoreEntitySet="Tickets">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
           <ScalarProperty Name="TicketId" ColumnName="TicketId" />
           <ScalarProperty Name="ConstituentID" ColumnName="ConstituentID" />
           <ScalarProperty Name="Service" ColumnName="Service" />
@@ -84,20 +86,6 @@
           <ScalarProperty Name="IssueAddInfoId" ColumnName="IssueAddInfoId" />
           <ScalarProperty Name="DateReported" ColumnName="DateReported" />
           <ScalarProperty Name="TimeReported" ColumnName="TimeReported" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Constituents">
-      <EntityTypeMapping TypeName="ServiceRequestDBModel.Constituent">
-        <MappingFragment StoreEntitySet="Constituents">
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="MI" ColumnName="MI" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="ConstituentId" ColumnName="ConstituentId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

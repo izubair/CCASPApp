@@ -12,51 +12,39 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Service)
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.Issue)
+        </th>       
+        <th>
+            @Html.DisplayNameFor(model => model.IssueDetailId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateReported)
+            @Html.DisplayNameFor(model => model.IssueAddInfoId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TimeReported)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Constituent.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IssueAddInfo.AdditionalInfo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IssueDetail.Details)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Issue.Description)
-        </th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th> 
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Service)
-        </td>
+            @Html.DisplayFor(modelItem => item.Subject)
+        </td>        
         <td>
-            @Html.DisplayFor(modelItem => item.DateReported)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeReported)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Constituent.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IssueAddInfo.AdditionalInfo)
+            @Html.DisplayFor(modelItem => item.Issue.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IssueDetail.Details)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Issue.Description)
+            @Html.DisplayFor(modelItem => item.IssueAddInfo.AdditionalInfo)
+        </td>       
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TicketId }) |

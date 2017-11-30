@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[TicketLocation]
 (
-	[TicketLocId] INT NOT NULL PRIMARY KEY,
+	[TicketLocId] INT NOT NULL IDENTITY PRIMARY KEY,
 	[TicketId] INT FOREIGN KEY references Tickets(TicketId),
 	[Latitude] float NOT NULL,
 	[Longitude] float NOT NULL,

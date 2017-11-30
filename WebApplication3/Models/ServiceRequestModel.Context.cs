@@ -32,6 +32,5 @@ namespace WebApplication3.Models
         public virtual DbSet<TicketLocAdditional> TicketLocAdditionals { get; set; }
         public virtual DbSet<TicketLocation> TicketLocations { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
-        public virtual DbSet<Constituent> Constituents { get; set; }
     }
 }

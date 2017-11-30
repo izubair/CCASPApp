@@ -1,15 +1,14 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using WebApplication3.Models;
+
+using Microsoft.AspNet.Identity;
 
 namespace WebApplication3.Controllers
 {
@@ -20,7 +19,7 @@ namespace WebApplication3.Controllers
         // GET: Tickets
         public ActionResult Index()
         {
-            var tickets = db.Tickets.Include(t => t.Constituent).Include(t => t.IssueAddInfo).Include(t => t.IssueDetail).Include(t => t.Issue);
+            var tickets = db.Tickets.Include(t => t.IssueAddInfo).Include(t => t.IssueDetail).Include(t => t.Issue);
             return View(tickets.ToList());
         }
 
@@ -39,40 +38,27 @@ namespace WebApplication3.Controllers
             return View(ticket);
         }
 
-       
         // GET: Tickets/Create
         public ActionResult Create()
         {
-            ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName");
+            //ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName");
             ViewBag.IssueAddInfoId = new SelectList(db.IssueAddInfoes, "IssueAddInfoId", "AdditionalInfo");
             ViewBag.IssueDetailId = new SelectList(db.IssueDetails, "IssueDetailId", "Details");
             ViewBag.IssueId = new SelectList(db.Issues, "IssueId", "Description");
-
-            
             return View();
         }
-        /*
-        [Route("Tickets/CreateTicket")]
-        public ActionResult CreateTicket() //string Latitude, string Longitude, string Address, string ParcelNo, string CrossSt1, string CrossSt2, string Jurisdiction)
-        {
-            
-            ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName");
-            ViewBag.IssueAddInfoId = new SelectList(db.IssueAddInfoes, "IssueAddInfoId", "AdditionalInfo");
-            ViewBag.IssueDetailId = new SelectList(db.IssueDetails, "IssueDetailId", "Details");
-            ViewBag.IssueId = new SelectList(db.Issues, "IssueId", "Description");
 
-            
-            //TempData["Message"] = Latitude + " " + Longitude;
-            //Session["Message"] = "Lat: " + Longitude + ", Lng: " + Longitude + ", Address: " + Address + 
-            //    ", ParcelNo: " + ParcelNo + ", CrossSt1: " + CrossSt1 + ", CrossSt2: " + CrossSt2 + ", Jurisdiction: " + Jurisdiction;
-            return View("Create");
-        }*/
-
-        
         public ActionResult SetTicketData(string Latitude, string Longitude, string Address, string ParcelNo, string CrossSt1, string CrossSt2, string Jurisdiction)
         {
-            Session["Message"] = "Lat: " + Longitude + ", Lng: " + Longitude + ", Address: " + Address +
+            Session["Message"] = "Lat: " + Latitude + ", Lng: " + Longitude + ", Address: " + Address +
                 ", ParcelNo: " + ParcelNo + ", CrossSt1: " + CrossSt1 + ", CrossSt2: " + CrossSt2 + ", Jurisdiction: " + Jurisdiction;
+            Session["Lat"] = Latitude;
+            Session["Lng"] = Longitude;
+            Session["Address"] = Address;
+            Session["ParcelNo"] = ParcelNo;
+            Session["CrossSt1"] = CrossSt1;
+            Session["CrossSt2"] = CrossSt2;
+            Session["Jurisdiction"] = Jurisdiction;
 
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
@@ -109,16 +95,36 @@ namespace WebApplication3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TicketId,ConstituentID,Service,IssueId,IssueDetailId,IssueAddInfoId,DateReported,TimeReported")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "TicketId,ConstituentID,Service,IssueId,IssueDetailId,IssueAddInfoId,DateReported,TimeReported,Subject,Description")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
+                TicketLocation ticketLoc = new TicketLocation();
+
+                //ticketLoc.jurisdiction = Convert.ToString(Session["Lat"]);
+                ticket.ConstituentID = User.Identity.GetUserId();
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
+                ticketLoc.Latitude = Convert.ToDouble(Session["Lat"]);
+                ticketLoc.Longitude = Convert.ToDouble(Session["Lng"]);
+                ticketLoc.Location = Convert.ToString(Session["Address"]);
+                ticketLoc.ParcelNo = Convert.ToString(Session["ParcelNo"]);
+                ticketLoc.CrossSt1 = Convert.ToString(Session["CrossSt1"]);
+                ticketLoc.CrossSt2 = Convert.ToString(Session["CrossSt2"]);
+                if (ticketLoc.Location.Contains("Henderson"))
+                    ticketLoc.City = "Henderson";
+                else
+                    ticketLoc.City = "Las Vegas";
+                ticketLoc.State = "NV";
+                // Now use the identity of created ticket 
+                ticketLoc.TicketId = ticket.TicketId;
+                db.TicketLocations.Add(ticketLoc);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName", ticket.ConstituentID);
+            //ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName", ticket.ConstituentID);
             ViewBag.IssueAddInfoId = new SelectList(db.IssueAddInfoes, "IssueAddInfoId", "AdditionalInfo", ticket.IssueAddInfoId);
             ViewBag.IssueDetailId = new SelectList(db.IssueDetails, "IssueDetailId", "Details", ticket.IssueDetailId);
             ViewBag.IssueId = new SelectList(db.Issues, "IssueId", "Description", ticket.IssueId);
@@ -137,7 +143,7 @@ namespace WebApplication3.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName", ticket.ConstituentID);
+            //ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName", ticket.ConstituentID);
             ViewBag.IssueAddInfoId = new SelectList(db.IssueAddInfoes, "IssueAddInfoId", "AdditionalInfo", ticket.IssueAddInfoId);
             ViewBag.IssueDetailId = new SelectList(db.IssueDetails, "IssueDetailId", "Details", ticket.IssueDetailId);
             ViewBag.IssueId = new SelectList(db.Issues, "IssueId", "Description", ticket.IssueId);
@@ -149,7 +155,7 @@ namespace WebApplication3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TicketId,ConstituentID,Service,IssueId,IssueDetailId,IssueAddInfoId,DateReported,TimeReported")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "TicketId,ConstituentID,Service,IssueId,IssueDetailId,IssueAddInfoId,DateReported,TimeReported,Subject,Description")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -157,7 +163,7 @@ namespace WebApplication3.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName", ticket.ConstituentID);
+            //ViewBag.ConstituentID = new SelectList(db.Constituents, "ConstituentId", "FirstName", ticket.ConstituentID);
             ViewBag.IssueAddInfoId = new SelectList(db.IssueAddInfoes, "IssueAddInfoId", "AdditionalInfo", ticket.IssueAddInfoId);
             ViewBag.IssueDetailId = new SelectList(db.IssueDetails, "IssueDetailId", "Details", ticket.IssueDetailId);
             ViewBag.IssueId = new SelectList(db.Issues, "IssueId", "Description", ticket.IssueId);
