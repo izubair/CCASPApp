@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication3", "WebApplication3\WebApplication3.csproj", "{B3C78258-788E-4C2A-8F01-81120EDF1AFD}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ServiceRequestDB", "..\..\..\..\..\Source\Repos\ServiceRequestDB\ServiceRequestDB\ServiceRequestDB.sqlproj", "{0FFA974E-DCE6-4D7D-B7B9-DEB6BC25CFFB}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ServiceRequestDB", "ServiceRequestDB\ServiceRequestDB.sqlproj", "{0FFA974E-DCE6-4D7D-B7B9-DEB6BC25CFFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
