@@ -11,7 +11,7 @@ var addrData = { lat: "", lon: "", addr: "", parcel: "", crossSt1: "", crossSt2:
 // A function to create the marker and set up the event window function  
  function createMarker(latlng, name, html) {  
  var contentString = html; 
- var iconBase = ''; 
+ var iconBase = '/Content/'; 
  var lv_marker = new google.maps.Marker({  
  position: latlng, 
 // icon: {
