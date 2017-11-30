@@ -1,0 +1,186 @@
+﻿@model WebApplication3.Models.Ticket
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Ticket</h4>        
+        
+        <h4>Location: @Session["Message"]</h4>
+       
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.TicketId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TicketId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TicketId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConstituentID, "ConstituentID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ConstituentID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ConstituentID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Service, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Service, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Service, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IssueId, "IssueId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IssueId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IssueId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IssueDetailId, "IssueDetailId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IssueDetailId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.IssueDetailId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IssueAddInfoId, "IssueAddInfoId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IssueAddInfoId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.IssueAddInfoId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateReported, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateReported, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DateReported, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimeReported, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TimeReported, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TimeReported, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        $("#IssueId").change(function () {
+            //alert("Change triggered!");
+
+            var IssueId = $(this).val();
+            var subItems = "";
+            $.ajax({
+                url: '/Tickets/GetIssueDetail',
+                type: 'GET',
+                data: { id: IssueId },
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //alert("AJAX success!");
+                    subItems = "<option value='" + 0 + "'>" + "Select Item" + "</option>";
+                    $.each(data, function (index, item) {
+                        subItems += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                    });
+                    $("#IssueDetailId").html(subItems);
+                    //if (subItems.length > 1) {
+                        //$("#IssueDetailId").change();
+                    //$("#IssueDetailId").removeAttr("disabled");
+                    $("#IssueDetailId").attr("disabled", false);
+                    $("#IssueAddInfoId").html("");
+                    $("#IssueAddInfoId").attr("disabled", true);
+                    //}
+                },
+                error: function (xhr) {
+
+                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                }
+            });
+        });
+
+        // Issue Additional Info
+        $("#IssueDetailId").change(function () {
+            //alert("Change triggered!");
+            var IssueId = $("#IssueId").val();
+            var IssueDetailId = $(this).val();
+            var subItems = "";
+            $.ajax({
+                url: '/Tickets/GetIssueAddInfo',
+                type: 'GET',
+                data: { id: IssueId, detailId: IssueDetailId },
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //alert("AJAX success!");
+                    subItems = "<option value='" + 0 + "'>" + "Select Item" + "</option>";
+                    $.each(data, function (index, item) {
+                        subItems += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                    });
+                    $("#IssueAddInfoId").html(subItems);
+                    //if (subItems.length > 1) {
+                    //{
+                        $("#IssueAddInfoId").change();
+                        $("#IssueAddInfoId").attr("disabled", false);
+                    //}
+
+                },
+                error: function (xhr) {
+
+                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                }
+            });
+        });        
+    };
+</script>
+
+<!-- 
+<script type="text/javascript">
+$(document).ready(function () {
+   
+        $("#IssueId").change(function () {
+            var val = $(this).val();
+            var subItems="";
+            $.getJSON("@Url.Action("GetIssueDetail","Ticket")", {id:val} ,function (data) {
+              $.each(data,function(index,item){
+                  subItems += "<option value='" + item.IssueDetailId + "'>" + item.Details+"</option>"
+              });
+              $("#IssueDetailId").html(subItems)
+            });       
+    });
+
+    });
+</script>
+-->

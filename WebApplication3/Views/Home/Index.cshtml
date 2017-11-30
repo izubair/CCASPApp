@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ClarkConnect</h1>
+    <p class="lead">ClarkConnect is a web site for Citizens to report concerns and request service</p>
+    <p><a href="http://www.clarkcountynv.gov/services/pages/iwantto.aspx?cat=Report%20a" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<!--
+    
+<div>
+    <p id="jsonData">
+        Json text will be shown here
+    </p>
+    <a href="" onclick="GetBooks()">Click to Get Books</a>
+</div>
+-->
+
+<div class="row">
+    <div class="col-md-4">
+        <a href="~/Home/Location">
+            <img border="0" alt="SERVICE Request" src="@Url.Content("~/content/ReqService.png")" width="250" height="250">          
+    </div>
+    <div class="col-md-4">
+        <a href="http://localhost/CCCR/">
+            <img border="0" alt="SERVICE Request" src="@Url.Content("~/content/AskQuestion.png")" width="250" height="250">
+    </div>
+    <div class="col-md-4">
+        <a href="http://localhost/CCCR/">
+            <img border="0" alt="SERVICE Request" src="@Url.Content("~/content/MapSR.png")" width="250" height="250">
+    </div>
+</div>

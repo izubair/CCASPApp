@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3dcafed2a0cf49a3927763ec2aa0f878" Name="Diagram1">
+        <EntityTypeShape EntityType="ServiceRequestDBModel.Dept" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.IssueAddInfo" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.IssueDetail" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.Issue" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.TicketLocAdditional" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.TicketLocation" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.Ticket" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__IssueAddI__DeptI__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__IssueDeta__DeptI__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__IssueAddI__Issue__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__IssueAddI__Issue__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__IssueDeta__Issue__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__TicketLoc__Ticke__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__TicketLoc__Ticke__3D5E1FD2" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.Constituent" Width="1.5" PointX="5.375" PointY="8" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__Tickets__Constit__403A8C7D" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__Tickets__IssueAd__4316F928" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__Tickets__IssueDe__4222D4EF" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__Tickets__IssueId__412EB0B6" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
