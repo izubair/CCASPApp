@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[Constituents]
+(
+	[ConstituentId] INT NOT NULL PRIMARY KEY,
+	[FirstName] VARCHAR(32) NOT NULL,
+	[MI] VARCHAR(32) NULL,
+	[LastName] VARCHAR(32) NOT NULL,
+	[Email] VARCHAR(32) NOT NULL,
+	[Phone] VARCHAR(32) NULL,
+	[Address] VARCHAR(64) NULL,
+	[Notes] VARCHAR(132) NULL
+)
