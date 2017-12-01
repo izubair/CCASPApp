@@ -26,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th> 
+        <th>
+            @Html.DisplayNameFor(model => model.DateReported)
+        </th>        
         <th></th>
     </tr>
 
@@ -46,6 +49,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateReported)
+            @Html.DisplayFor(modelItem => item.TimeReported)
+        </td>       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TicketId }) |
             @Html.ActionLink("Details", "Details", new { id=item.TicketId }) |

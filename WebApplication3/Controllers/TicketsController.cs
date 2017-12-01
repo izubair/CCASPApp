@@ -103,6 +103,9 @@ namespace WebApplication3.Controllers
 
                 //ticketLoc.jurisdiction = Convert.ToString(Session["Lat"]);
                 ticket.ConstituentID = User.Identity.GetUserId();
+                DateTime dttm = DateTime.Now;
+                ticket.DateReported = dttm.Date;
+                ticket.TimeReported = dttm.TimeOfDay;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 ticketLoc.Latitude = Convert.ToDouble(Session["Lat"]);

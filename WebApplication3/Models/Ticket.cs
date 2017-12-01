@@ -36,8 +36,12 @@ namespace WebApplication3.Models
         [Display(Name = "Additional Information")]
         public Nullable<int> IssueAddInfoId { get; set; }
         [ScaffoldColumn(false)]
+        [Display(Name = "Created On")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public Nullable<System.DateTime> DateReported { get; set; }
-        [ScaffoldColumn(false)]
+        [ScaffoldColumn(false)]        
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}")]
+        [Display(Name = "Time Reported")]
         public Nullable<System.TimeSpan> TimeReported { get; set; }
         [Display(Name = "Subject")]
         [Required]
