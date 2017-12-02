@@ -1,0 +1,182 @@
+﻿@model IEnumerable<WebApplication3.Models.TicketLocation>
+
+@{
+    ViewBag.Title = "MapTickets";       
+}
+
+<input type="button" title="GetData" id="GetData" style="display: none" />
+<h2>MapTickets</h2>
+<!--
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+-->
+<div class="container">
+    <div class="row">        
+        <div class="col-sm-12">
+            <!--Card-->
+            <div class="card card-cascade narrower">
+
+                <!--Card image-->
+                <div class="view gradient-card-header blue-gradient">
+
+                </div>
+                <!--/Card image-->
+                <!--Card content-->
+                <div class="card-body text-center">
+
+                    <!--Google map-->
+                    <div id="ticketsmap-container" class="z-depth-1" style="height: 600px"></div>
+
+                </div>
+                <!--/.Card content-->
+
+            </div>
+            <!--/.Card-->
+        </div>
+        <!--
+        <div class="col-sm-4">
+          <h3>Column 3</h3>
+          <p>Lorem ipsum dolor..</p>
+          <p>Ut enim ad..</p>
+        </div>
+            -->
+
+    </div>
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Latitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Longitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HouseNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Street)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostalCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParcelNo)
+                </th>
+                <!--
+                <th>
+                    @Html.DisplayNameFor(model => model.CrossSt1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CrossSt2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ticket.ConstituentID)
+                </th>
+                -->
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Latitude)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Longitude)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HouseNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Street)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostalCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParcelNo)
+                    </td>
+                     <!--
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CrossSt1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CrossSt2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ticket.ConstituentID)
+                    </td>
+                   
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TicketLocId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.TicketLocId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TicketLocId })
+                    </td>
+                    -->
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+
+    //initMapForTickets();
+    //getTicketData();
+    window.onload = function () {
+        initMapForTickets();
+        getTicketData();
+        $("#GetData").click(function () {
+           
+            //alert("Change triggered!");   
+            var subItems;
+            var i;
+            $.ajax({
+                url: '/Home/GetTicketsLatLng',
+                type: 'GET',
+                //data: { id: IssueId },
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //alert("AJAX success!");                  
+                    addTicketMarkers(data);
+                },
+                error: function (xhr) {
+
+                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                }
+            });
+        });
+    }; 
+
+</script>
+
+

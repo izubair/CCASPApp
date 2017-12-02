@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[TicketLocAdditional]
 (
 	[TicketLocAddId] INT NOT NULL IDENTITY PRIMARY KEY,
-	[TicketId] INT FOREIGN KEY references Tickets(TicketId),
+	[TicketId] INT FOREIGN KEY references Tickets(TicketId) ON DELETE CASCADE,
 	[JurisdictionCode] INT NOT NULL DEFAULT 1,
 	[MinorCivilDiv] INT NOT NULL DEFAULT 1,
 	[StateAssembly] INT NOT NULL DEFAULT 1,

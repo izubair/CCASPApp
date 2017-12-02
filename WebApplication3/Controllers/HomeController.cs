@@ -5,11 +5,15 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
-{
+{    
     public class HomeController : Controller
     {
+        private ServiceRequestDBEntities db = new ServiceRequestDBEntities();        
+
         public ActionResult Index()
         {
             return View();
@@ -40,6 +44,24 @@ namespace WebApplication3.Controllers
             ViewBag.Message = "Select Address, Cross Streets or Parcel and enter required data or click (Drop pin) on map to select location";
 
             return View();
+        }       
+
+        public ActionResult MapTickets()
+        {
+
+            var ticketsLoc = db.TicketLocations;
+            //var json = new JavaScriptSerializer().Serialize(ticketsLatLng);
+            var ticketsLatLng = ticketsLoc.Select(o => new { o.Latitude, o.Longitude, o.Location });
+            Session["MapTicketsJson"] = ticketsLatLng;
+
+            return View(ticketsLoc.ToList());
+           
+        }        
+
+        public ActionResult GetTicketsLatLng()
+        {            
+            var ticLatLng = Session["MapTicketsJson"];
+            return Json(ticLatLng, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Done(string address, string loc)

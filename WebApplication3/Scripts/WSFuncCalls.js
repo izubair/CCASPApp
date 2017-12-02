@@ -1,5 +1,6 @@
 var jurisdictionList;
 var map;
+var ticketsMap;
 var geocoder;
 var marker = null;
 var pin_marker = null;
@@ -758,6 +759,57 @@ function GetAddressAndParcel()
 function getLocAddress()
 {
     return document.getElementById("AddressText").value;
+}
+
+// FOR MapTickets.cshtml
+/////////////////////////////////////
+function initMapForTickets() {
+    ticketsMap = new google.maps.Map(document.getElementById('ticketsmap-container'), {
+        zoom: 11,
+        center: { lat: 36.176546, lng: -115.151649 }
+    });
+
+    infowindow = new google.maps.InfoWindow(
+        {
+            size: new google.maps.Size(150, 50)
+        }
+    );
+
+    
+}
+/////////////////////////////////////////
+function addTicketMarkers(data) {
+    for (i = 0; i < data.length; i++) {
+        var latLng = new google.maps.LatLng(data[i].Latitude, data[i].Longitude);
+        // Creating a marker and putting it on the map        
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: ticketsMap,
+            title: data[i].Location
+        });
+    }
+}
+/////////////////////////////////////
+function getTicketData() {
+    //alert("Change triggered!");   
+    var subItems;
+    var i;
+    $.ajax({
+        url: '/Home/GetTicketsLatLng',
+        type: 'GET',
+        //data: { id: IssueId },
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data) {
+            //alert("AJAX success!");                  
+            addTicketMarkers(data);
+        },
+        error: function (xhr) {
+
+            alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+        }
+    });
 }
 
 

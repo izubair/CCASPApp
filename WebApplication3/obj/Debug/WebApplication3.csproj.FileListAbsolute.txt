@@ -305,3 +305,4 @@ C:\ASPDOTNETApps\CCASPApp\WebApplication3\bin\Microsoft.AI.Web.xml
 C:\ASPDOTNETApps\CCASPApp\WebApplication3\obj\Debug\WebApplication3.csproj.CoreCompileInputs.cache
 C:\ASPDOTNETApps\CCASPApp\WebApplication3\obj\Debug\WebApplication3.dll
 C:\ASPDOTNETApps\CCASPApp\WebApplication3\obj\Debug\WebApplication3.pdb
+C:\ASPDOTNETApps\CCASPApp\WebApplication3\obj\Debug\WebApplication3.csprojResolveAssemblyReference.cache

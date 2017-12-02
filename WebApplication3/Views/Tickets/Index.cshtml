@@ -10,10 +10,10 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
-        <th>
+    <tr>        
+        <th>            
             @Html.DisplayNameFor(model => model.Subject)
-        </th>        
+        </th> 
         <th>
             @Html.DisplayNameFor(model => model.Issue)
         </th>       
@@ -23,12 +23,17 @@
         <th>
             @Html.DisplayNameFor(model => model.IssueAddInfoId)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
+         <!--
+        <th>           
+            @Html.DisplayNameFor(model => model.Description)           
         </th> 
+        -->
         <th>
             @Html.DisplayNameFor(model => model.DateReported)
-        </th>        
+        </th>   
+        <th>
+            @Html.DisplayNameFor(model => model.TicketLocations.ToArray()[0].Location)
+        </th>  
         <th></th>
     </tr>
 
@@ -45,14 +50,19 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IssueAddInfo.AdditionalInfo)
-        </td>       
+        </td> 
+        <!--
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
+        -->
         <td>
             @Html.DisplayFor(modelItem => item.DateReported)
             @Html.DisplayFor(modelItem => item.TimeReported)
-        </td>       
+        </td> 
+        <td>            
+            @Html.DisplayFor(modelItem => item.TicketLocations.ToArray()[0].Location)
+        </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TicketId }) |
             @Html.ActionLink("Details", "Details", new { id=item.TicketId }) |
