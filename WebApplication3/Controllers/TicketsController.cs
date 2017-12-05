@@ -63,6 +63,18 @@ namespace WebApplication3.Controllers
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetIssues()
+        {
+            //List<SelectListItem> items = new List<SelectListItem>();
+            //items.Add(new SelectListItem() { Text = "Sub Item 1", Value = "1" });
+            //items.Add(new SelectListItem() { Text = "Sub Item 2", Value = "8" });
+            var issuesList = new SelectList(db.Issues, "IssueId", "Description");
+            //return View();
+            // you may replace the above code with data reading from database based on the id
+
+            return Json(issuesList, JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult GetIssueDetail(int id)
         {
@@ -77,6 +89,19 @@ namespace WebApplication3.Controllers
             return Json(ViewBag.IssueDetailId, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetDetails(int id)
+        {
+            //List<SelectListItem> items = new List<SelectListItem>();
+            //items.Add(new SelectListItem() { Text = "Sub Item 1", Value = "1" });
+            //items.Add(new SelectListItem() { Text = "Sub Item 2", Value = "8" });
+            var issueDetails = new SelectList(db.IssueDetails.Where(o => o.IssueID == id).ToList()
+                , "IssueDetailId", "Details");
+            //return View();
+            // you may replace the above code with data reading from database based on the id
+
+            return Json(issueDetails, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetIssueAddInfo(int id, int detailId)
         {
             //List<SelectListItem> items = new List<SelectListItem>();
@@ -88,6 +113,19 @@ namespace WebApplication3.Controllers
             // you may replace the above code with data reading from database based on the id
 
             return Json(ViewBag.IssueAddInfoId, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAddInfo(int id, int detailId)
+        {
+            //List<SelectListItem> items = new List<SelectListItem>();
+            //items.Add(new SelectListItem() { Text = "Sub Item 1", Value = "1" });
+            //items.Add(new SelectListItem() { Text = "Sub Item 2", Value = "8" });
+            var issueAddInfo = new SelectList(db.IssueAddInfoes.Where(o => o.IssueID == id && o.IssueDetailID == detailId).ToList()
+                , "IssueAddInfoId", "AdditionalInfo");
+            //return View();
+            // you may replace the above code with data reading from database based on the id
+
+            return Json(issueAddInfo, JsonRequestBehavior.AllowGet);
         }
 
         // POST: Tickets/Create

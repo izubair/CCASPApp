@@ -774,8 +774,6 @@ function initMapForTickets() {
             size: new google.maps.Size(150, 50)
         }
     );
-
-    
 }
 /////////////////////////////////////////
 function addTicketMarkers(data) {
@@ -791,7 +789,11 @@ function addTicketMarkers(data) {
 }
 /////////////////////////////////////
 function getTicketData() {
-    //alert("Change triggered!");   
+    //alert("Change triggered!");  
+
+    data = getTicLatLng();
+    addTicketMarkers(data);
+    /*
     var subItems;
     var i;
     $.ajax({
@@ -803,6 +805,33 @@ function getTicketData() {
         success: function (data) {
             //alert("AJAX success!");                  
             addTicketMarkers(data);
+        },
+        error: function (xhr) {
+
+            alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+        }
+    });*/
+}
+/////////////////////////////////////
+function getIssues() {
+    $.ajax({
+        url: '/Tickets/GetIssues',
+        type: 'GET',
+        //data: { id: IssueId },
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data) {           
+            //Fill the combo box
+            var select = document.getElementById("selectIssue"); 
+            for (var i = 0; i < data.length; i++) {
+                var optTxt = data[i].Text;
+                var optValue = data[i].Value;
+                var el = document.createElement("option");
+                el.textContent = optTxt;
+                el.value = optValue;
+                select.appendChild(el);
+            }
         },
         error: function (xhr) {
 

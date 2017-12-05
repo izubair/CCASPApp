@@ -56,7 +56,77 @@ namespace WebApplication3.Controllers
 
             return View(ticketsLoc.ToList());
            
-        }        
+        }
+
+        public ActionResult MapFilteredTickets()
+        {
+            var days = Request.Form["optradio1"];
+
+            DateTime ticketDate = DateTime.Now.Date;
+            ticketDate = ticketDate.AddDays(-Convert.ToInt32(days));
+
+
+            string strIssueValue = "";
+            int issueID = 1; // First Value
+            if (Request.Form["selectIssue"] != null)
+            {
+                strIssueValue = Request.Form["selectIssue"].ToString();
+                issueID = Convert.ToInt32(strIssueValue);
+                if (issueID == 0)
+                    issueID = 1;
+            }
+
+            string strDetailValue;
+            int detailID = 0;
+            if (Request.Form["selectDetails"] != null)
+            {
+                strDetailValue = Request.Form["selectDetails"].ToString();
+                detailID = Convert.ToInt32(strDetailValue);
+            }
+
+
+
+            string straddInfoValue; 
+            int addInfoID = 0;
+            if (Request.Form["selectAddInfo"] != null)
+            {
+                straddInfoValue = Request.Form["selectAddInfo"].ToString();
+                addInfoID = Convert.ToInt32(straddInfoValue);
+            }
+
+            
+            var ticketStatus = Request.Form["optradio2"];
+
+
+
+            var ticketsFiltered = db.Tickets.Where(o => o.DateReported > ticketDate && o.IssueId == issueID); ;
+            if (detailID != 0 && addInfoID != 0)
+            {
+                ticketsFiltered = ticketsFiltered.Where(o => o.IssueDetailId == detailID && o.IssueAddInfoId == addInfoID);
+            }
+            else if (detailID != 0)
+            {
+                // only Issue selected
+                ticketsFiltered = ticketsFiltered.Where(o => o.IssueDetailId == detailID);
+            }
+            
+            
+            var ticketsLoc = from ticket in ticketsFiltered
+                             join ticLoc in db.TicketLocations
+                         on ticket.TicketId equals ticLoc.TicketId
+                         select ticLoc;
+
+            
+
+
+            //var ticketsLoc = db.TicketLocations;
+            //var json = new JavaScriptSerializer().Serialize(ticketsLatLng);
+            var ticketsLatLng = ticketsLoc.Select(o => new { o.Latitude, o.Longitude, o.Location });
+            Session["MapTicketsJson"] = ticketsLatLng;
+
+            return View("MapTickets", ticketsLoc.ToList());
+
+        }
 
         public ActionResult GetTicketsLatLng()
         {            

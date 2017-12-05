@@ -21,7 +21,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD9HKIXx1xm4_VIY-_oXY5EhYXZjHhnkz8"></script>
-
+    
+    <link rel="stylesheet" href="~/Content/BootSideMenu.css">
     <style>
         html {
             height: 100%;
@@ -111,7 +112,7 @@
         .footer-p {
             color: white;
             padding-top: 10px;            
-        }        
+        }       
     </style>
 
 </head>
@@ -129,8 +130,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Top 5 Categories", "About", "Home")</li>
+                    <li>@Html.ActionLink("Last 5 Requests", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -163,5 +164,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <!--WE WANT TO RUN THIS SCRIPT ON PAGE LOAD SO PUTTING IT HERE INSTEAD OF IN THE head-->
+    <script src="~/Scripts/BootSideMenu.js"></script>
 </body>
 </html>
