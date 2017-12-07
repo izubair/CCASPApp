@@ -106,13 +106,62 @@
 
         #footer {
             background-color: black;
-            text-align: center;            
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+        
+
+        @@media (max-width:2600px) {
+            .img-mainlinks {
+                max-width: 100%;
+                max-height: 100%;
+            }
+            .footer-p {
+                color: white;
+                padding-top: 10px;
+                font-size: medium;
+            }
         }
 
-        .footer-p {
-            color: white;
-            padding-top: 10px;            
-        }       
+        @@media (max-width:450px) {
+            .img-mainlinks {
+                max-width: 140px;
+                max-height: 140px;
+            }
+            .footer-p {
+                color: white;
+                padding-top: 10px;
+                font-size: medium;
+            }
+        }
+
+        @@media (max-width:413px) {
+            .img-mainlinks {
+                max-width: 100px;
+                max-height: 100px;
+            }
+            .footer-p {
+                color: white;
+                padding-top: 10px;
+                font-size: small;
+            }
+        }
+
+        @@media (max-width:325px) {
+            .img-mainlinks {
+                max-width: 80px;
+                max-height: 80px;
+            }
+            .footer-p {
+                color: white;
+                padding-top: 10px;
+                font-size: smaller;
+            }
+        }
+
     </style>
 
 </head>
@@ -124,14 +173,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("ClarkConnect", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </button>                
+                <!--
+                <b>@Html.ActionLink("ClarkConnect", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</b>
+                -->
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Top 5 Categories", "About", "Home")</li>
-                    <li>@Html.ActionLink("Last 5 Requests", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Top 5 Categories", "Top5Catg", "Home")</li>
+                    <li>@Html.ActionLink("Last 5 Requests", "Last5Requests", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -149,7 +200,7 @@
 
                         <a href="https://www.linkedin.com/company/clark-county">
                             <img border="0" alt="LinkedIn" src="@Url.Content("~/content/linkedin.png")" width="25" height="25">
-                        <a href="https://teitter.com/ClarkCountyNV">
+                        <a href="https://twitter.com/ClarkCountyNV">
                                 <img border="0" alt="Twitter" src="@Url.Content("~/content/twitter.png")" width="25" height="25">
                         <a href="http://www.youtube.com/user/ClarkCountyNV">
                                 <img border="0" alt="YouTube" src="@Url.Content("~/content/youtube.png")" width="25" height="25">

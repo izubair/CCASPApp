@@ -38,7 +38,7 @@
                 //code to be executed after menu close
             },
             onStartup: function () {
-                //code to be executed when the plugin is called
+                //code to be executed when the plugin is called               
             }
         };
 

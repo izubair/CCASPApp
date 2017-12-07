@@ -269,6 +269,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Content\askquestion.jpg" />
     <Content Include="Content\BootSideMenu.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -279,6 +280,8 @@
     <Content Include="Content\orangearrow.png" />
     <Content Include="Content\questionicon.png" />
     <Content Include="Content\ReqService.png" />
+    <Content Include="Content\search.jpg" />
+    <Content Include="Content\searchmap.png" />
     <Content Include="Content\serviceicon.png" />
     <Content Include="Content\twitter.png" />
     <Content Include="Content\youtube.png" />

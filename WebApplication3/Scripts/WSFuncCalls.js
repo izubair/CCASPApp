@@ -249,10 +249,6 @@ function openTab(evt, tabName) {
 		}
 }
 
-
-
-
-
 function GetStatePlaneCoord(lat, lon, coords){
 	var dataStr = 'inSR=4326&outSR=3421&geometries=' + lon + '%2C' + lat + '&transformation=&transformForward=false&f=pjson';			
 	$.ajax({
@@ -774,6 +770,32 @@ function initMapForTickets() {
             size: new google.maps.Size(150, 50)
         }
     );
+
+    document.getElementById("tabMap").click();
+}
+/////////////////////////////////////////
+function openTab_MapTickets(evt, tabName) {
+
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+
+    
 }
 /////////////////////////////////////////
 function addTicketMarkers(data) {
@@ -839,6 +861,12 @@ function getIssues() {
 
         }
     });
+}
+/////////////////////////////////////////////////////
+function openSearchFilter(evt, tabName)
+{
+    //$(".toggler").click();  
+    openTab_MapTickets(evt, tabName);
 }
 
 

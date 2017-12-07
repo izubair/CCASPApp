@@ -37,7 +37,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Subject)
@@ -60,13 +61,26 @@
             @Html.DisplayFor(modelItem => item.DateReported)
             @Html.DisplayFor(modelItem => item.TimeReported)
         </td> 
-        <td>            
-            @Html.DisplayFor(modelItem => item.TicketLocations.ToArray()[0].Location)
-        </td>
+        @{
+            if (item.TicketLocations.Count != 0)
+            {                
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketLocations.ToArray()[0].Location)
+                </td>
+            }
+            else
+            {
+                <td>
+                    
+                </td>
+            }
+        }
+
+
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TicketId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TicketId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TicketId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.TicketId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.TicketId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TicketId })
         </td>
     </tr>
 }

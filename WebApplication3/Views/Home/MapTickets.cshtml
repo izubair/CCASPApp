@@ -5,7 +5,8 @@
     ViewBag.Title = "MapTickets";
     object ticLatLng = Model.Select(o => new { o.Latitude, o.Longitude, o.Location });
     JavaScriptSerializer js = new JavaScriptSerializer();
-    string json_data = js.Serialize(ticLatLng);    
+    string json_data = js.Serialize(ticLatLng);
+    string searchDisplay = ViewBag.searchDisplay;
 }
 
 <input type="button" title="GetData" id="GetData" style="display: none" />
@@ -17,8 +18,18 @@
 </p>
 -->
 <div class="container">
-    <div class="row">        
-        <div class="col-sm-12">
+    <div class="row">
+        <div style="float: left">
+            <button id="btnSearch" class="tablinks" style="width: 100%" onclick="openSearchFilter(event, 'Search')">Search Criteria</button>
+        </div>
+        <div class="tab" style="float: right">
+            <button class="tablinks" style="width: 50%" onclick="openTab_MapTickets(event, 'Map')" id="tabMap">Map</button>
+            <button class="tablinks" style="width: 50%" onclick="openTab_MapTickets(event, 'List')" id="tabList">List</button>
+        </div>
+    </div>
+    <div class="row">
+
+        <div id="Map" class="tabcontent">
             <!--Card-->
             <div class="card card-cascade narrower">
 
@@ -41,230 +52,181 @@
         </div>
         <!--
         <div class="col-sm-4">
-          <h3>Column 3</h3>
-          <p>Lorem ipsum dolor..</p>
-          <p>Ut enim ad..</p>
+            <h3>Column 3</h3>
+            <p>Lorem ipsum dolor..</p>
+            <p>Ut enim ad..</p>
         </div>
             -->
 
-    </div>
-    <div class="row">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Latitude)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Longitude)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HouseNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Street)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.City)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.State)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PostalCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Country)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Location)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ParcelNo)
-                </th>
-                <!--
-                <th>
-                    @Html.DisplayNameFor(model => model.CrossSt1)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CrossSt2)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Ticket.ConstituentID)
-                </th>
-                -->
-                <th></th>
-            </tr>
 
+        <div id="List" class="tabcontent">
+            
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Latitude)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Longitude)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HouseNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Street)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.State)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PostalCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Country)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Location)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ParcelNo)
-                    </td>
-                     <!--
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CrossSt1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CrossSt2)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ticket.ConstituentID)
-                    </td>
-                   
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.TicketLocId }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.TicketLocId }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.TicketLocId })
-                    </td>
-                    -->
-                </tr>
-            }
+                <div class="card card-cascade narrower" style="padding: 5px">
+                    <!--Card image-->
+                    <div class="view gradient-card-header blue-gradient">
 
-        </table>
-    </div>
+                    </div>
+                    <!--/Card image-->
+                    <!--Card content-->
+                    <div class="card-body text-left">
+
+                        <!--Ticket Info-->
+                        <div class="row">
+                            <h4 class="card-title">@Html.DisplayNameFor(model => model.Ticket.TicketId): <font color="blue">@Html.DisplayFor(modelItem => item.Ticket.TicketId)</font></h4>
+                           
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <b>@Html.DisplayNameFor(model => model.Ticket.Description):</b> @Html.DisplayFor(modelItem => item.Ticket.Description)
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <b>@Html.DisplayNameFor(model => model.Location):</b> @Html.DisplayFor(modelItem => item.Location)
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <b>@Html.DisplayNameFor(model => model.Ticket.Issue):</b> @Html.DisplayFor(modelItem => item.Ticket.Issue.Description)
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <b>@Html.DisplayNameFor(model => model.Ticket.DateReported):</b> @Html.DisplayFor(modelItem => item.Ticket.DateReported) @Html.DisplayFor(modelItem => item.Ticket.TimeReported)
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--/.Card content-->
+                </div>
+                
+            }              
+        </div> <!--List Tab content end-->
+
+        <div id="Search" class="tabcontent">
+            <div class="row" id="test" style="padding: 4px">               
+                <form action="MapFilteredTickets" method="post">
+                    <div class="form-group">   
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label><b>Issue *</b></label>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <select name="selectIssue" id="selectIssue" style="width: 80%"></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label><b>Details</b></label>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <select name="selectDetails" id="selectDetails" style="width: 80%" disabled></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label><b>Additional Information</b></label>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <select name="selectAddInfo" id="selectAddInfo" style="width: 80%" disabled></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><b>Timeframe</b></label>
+                        <br />
+                        <div class="radio-inline">
+                            <label><input type="radio" name="optradio1" value="2" checked="checked">2 Days</label>
+                        </div>
+                        <div class="radio-inline">
+                            <label><input type="radio" name="optradio1" value="7">7 Days</label>
+                        </div>
+                        <div class="radio-inline">
+                            <label><input type="radio" name="optradio1" value="30">30 Days</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><b>Status</b></label>
+                        <br />
+                        <div class="radio-inline">
+                            <label><input type="radio" name="optradio2" value="All" checked="checked">All</label>
+                        </div>
+                        <div class="radio-inline">
+                            <label><input type="radio" name="optradio2" value="Open">Open</label>
+                        </div>
+                        <div class="radio-inline">
+                            <label><input type="radio" name="optradio2" value="Closed">Closed</label>
+                        </div>
+                    </div>
+                    <button id="btnSubmit" type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <!--
+        <div class="list-group">
+            <a href="#item-1" class="list-group-item" data-toggle="collapse">Item 1</a>
+            <div class="list-group collapse" id="item-1">
+                <a href="#" class="list-group-item">Item 1 di 1</a>
+                <a href="#" class="list-group-item">Item 2 di 1</a>
+                <a href="#item-1-1" class="list-group-item" data-toggle="collapse">Item 3 di 1</a>
+                <div class="list-group collapse" id="item-1-1">
+                    <a href="#" class="list-group-item">Item 1 di 1.3</a>
+                    <a href="#" class="list-group-item">Item 2 di 1.3</a>
+                    <a href="#" class="list-group-item">Item 3 di 1.3</a>
+                </div>
+            </div>
+            <a href="#item-2" class="list-group-item" data-toggle="collapse">Item 2</a>
+            <div class="list-group collapse" id="item-2">
+                <a href="#" class="list-group-item">Item 1 di 2</a>
+                <a href="#" class="list-group-item">Item 2 di 2</a>
+                <a href="#" class="list-group-item">Item 3 di 2</a>
+            </div>
+            <a href="#item-3" class="list-group-item" data-toggle="collapse">Item 3</a>
+            <div class="list-group collapse" id="item-3">
+                <a href="#" class="list-group-item">Item 1 di 3</a>
+                <a href="#" class="list-group-item">Item 2 di 3</a>
+                <a href="#item-3-1" class="list-group-item" data-toggle="collapse">Item 3 di 3</a>
+                <div class="list-group collapse" id="item-3-1">
+                    <a href="#" class="list-group-item">Item 1 di 3.3</a>
+                    <a href="#" class="list-group-item">Item 2 di 3.3</a>
+                    <a href="#" class="list-group-item">Item 3 di 3.3</a>
+                </div>
+            </div>
+            <a href="#item-4" class="list-group-item" data-toggle="collapse">Item 4</a>
+            <div class="list-group collapse" id="item-4">
+                <a href="#" class="list-group-item">Item 1 di 4</a>
+                <a href="#" class="list-group-item">Item 2 di 4</a>
+                <a href="#" class="list-group-item">Item 3 di 4</a>
+            </div>
+        </div>
+        -->
+            </div>
+            <!--/Test -->
+        </div>
 </div>
-<!--Test -->
-<div id="test" style="padding: 10px">
-    <div class="user">
-        <img src="../img/avatar.png" alt="Esempio" class="img-thumbnail"><br>
-        <a href="http://www.lombardoandrea.com" target="_blank" class="navbar-link">Andrea Lombardo</a>
-    </div>
-    <form action="MapFilteredTickets" method="post">
-        <div class="form-group">
-            <br />
-            <label><b>Issue *</b></label>
-            <br />
-            <select name="selectIssue" id="selectIssue" style="width: 90%">                
-            </select>
-            <br />           
-            <br />
-            <label><b>Details</b></label>
-            <br />
-            <select name="selectDetails" id="selectDetails" style="width: 90%" disabled>
-               
-            </select>
-            <br />           
-            <br />
-            <label><b>Additional Information</b></label>
-            <br />
-            <select name="selectAddInfo" id="selectAddInfo" style="width: 90%" disabled>
-              
-            </select>
-        </div>
-        <div class="form-group">
-            <label><b>Timeframe</b></label>
-            <br />
-            <div class="radio-inline">
-                <label><input type="radio" name="optradio1" value="2" checked="checked">2 Days</label>
-            </div>
-            <div class="radio-inline">
-                <label><input type="radio" name="optradio1" value="7">7 Days</label>
-            </div>
-            <div class="radio-inline">
-                <label><input type="radio" name="optradio1" value="30">30 Days</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label><b>Status</b></label>
-            <br />
-            <div class="radio-inline">
-                <label><input type="radio" name="optradio2" value="All" checked="checked">All</label>
-            </div>
-            <div class="radio-inline">
-                <label><input type="radio" name="optradio2" value="Open">Open</label>
-            </div>
-            <div class="radio-inline">
-                <label><input type="radio" name="optradio2" value="Closed">Closed</label>
-            </div>
-        </div>
-        <button id="btnSubmit" type="submit" class="btn btn-default">Submit</button>
-    </form>
-    <!--
-    <div class="list-group">
-        <a href="#item-1" class="list-group-item" data-toggle="collapse">Item 1</a>
-        <div class="list-group collapse" id="item-1">
-            <a href="#" class="list-group-item">Item 1 di 1</a>
-            <a href="#" class="list-group-item">Item 2 di 1</a>
-            <a href="#item-1-1" class="list-group-item" data-toggle="collapse">Item 3 di 1</a>
-            <div class="list-group collapse" id="item-1-1">
-                <a href="#" class="list-group-item">Item 1 di 1.3</a>
-                <a href="#" class="list-group-item">Item 2 di 1.3</a>
-                <a href="#" class="list-group-item">Item 3 di 1.3</a>
-            </div>
-        </div>
-        <a href="#item-2" class="list-group-item" data-toggle="collapse">Item 2</a>
-        <div class="list-group collapse" id="item-2">
-            <a href="#" class="list-group-item">Item 1 di 2</a>
-            <a href="#" class="list-group-item">Item 2 di 2</a>
-            <a href="#" class="list-group-item">Item 3 di 2</a>
-        </div>
-        <a href="#item-3" class="list-group-item" data-toggle="collapse">Item 3</a>
-        <div class="list-group collapse" id="item-3">
-            <a href="#" class="list-group-item">Item 1 di 3</a>
-            <a href="#" class="list-group-item">Item 2 di 3</a>
-            <a href="#item-3-1" class="list-group-item" data-toggle="collapse">Item 3 di 3</a>
-            <div class="list-group collapse" id="item-3-1">
-                <a href="#" class="list-group-item">Item 1 di 3.3</a>
-                <a href="#" class="list-group-item">Item 2 di 3.3</a>
-                <a href="#" class="list-group-item">Item 3 di 3.3</a>
-            </div>
-        </div>
-        <a href="#item-4" class="list-group-item" data-toggle="collapse">Item 4</a>
-        <div class="list-group collapse" id="item-4">
-            <a href="#" class="list-group-item">Item 1 di 4</a>
-            <a href="#" class="list-group-item">Item 2 di 4</a>
-            <a href="#" class="list-group-item">Item 3 di 4</a>
-        </div>
-    </div>
-    -->
-</div>
-<!--/Test -->
+
 
 <script type="text/javascript">
 
     //initMapForTickets();
     //getTicketData();
-    function getTicLatLng()
-    {
+    function getTicLatLng() {
         return @Html.Raw(@json_data);
     }
 
     window.onload = function () {
-        initMapForTickets();      
+        initMapForTickets();
         getTicketData();
 
-        $('#test').BootSideMenu({
-            side: "left",
-            width: "20%"
-        });
+        if ("@(ViewBag.searchDisplay)" == "block")
+        {
+            $('#test').css("display", "block");
+            $('#btnSearch').css("display", "block");
+            //$('#test').BootSideMenu({
+            //    side: "left",
+            //    width: "18%"
+            //});
+        }
+        else
+        {
+            $('#test').css("display", "none");
+            $('#btnSearch').css("display", "none");
+        }
+
+
         getIssues();
 
         $("#selectIssue").change(function () {
@@ -297,13 +259,13 @@
                     }
                     // Also empty the additional info cb, and add All to it
                     var addInfoSelect = document.getElementById("selectAddInfo")
-                    addInfoSelect.innerHtml = "";  
+                    addInfoSelect.innerHtml = "";
                     var el1 = document.createElement("option");
                     el1.textContent = "All";
                     el1.value = 0;
                     addInfoSelect.appendChild(el1);
 
-                    $("#selectDetails").attr("disabled", false);                   
+                    $("#selectDetails").attr("disabled", false);
                     $("#selectAddInfo").attr("disabled", true);
                 },
                 error: function (xhr) {
@@ -319,7 +281,7 @@
             //alert("Change triggered!");
             var IssueId = $("#selectIssue").val();
             var IssueDetailId = $(this).val();
-           
+
             $.ajax({
                 url: '/Tickets/GetAddInfo',
                 type: 'GET',
@@ -354,7 +316,7 @@
 
                 }
             });
-        });  
+        });
 
         $("#GetData").click(function () {
 

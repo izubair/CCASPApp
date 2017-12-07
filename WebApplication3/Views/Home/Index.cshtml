@@ -2,10 +2,8 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ClarkConnect</h1>
-    <p class="lead">ClarkConnect is a web site for Citizens to report concerns and request service</p>
-    <p><a href="http://www.clarkcountynv.gov/services/pages/iwantto.aspx?cat=Report%20a" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="page-header">
+    <h2><i>Clark<b>Connect</b></i></h2>      
 </div>
 <!--
     
@@ -17,17 +15,18 @@
 </div>
 -->
 
-<div class="row">
-    <div class="col-md-4">
-        <a href="~/Home/Location">
-            <img border="0" alt="Request SERVICE" src="@Url.Content("~/content/serviceicon.png")" width="250" height="250">          
+<div class="row" align="center">
+    
+        <div class="col-md-4">           
+            <a href="~/Home/Location">
+                <img class="img-mainlinks" border="0" alt="Request SERVICE" src="@Url.Content("~/content/serviceicon.png")">             
+        </div>
+        <div class="col-md-4">
+            <a href="~/Tickets/Create">
+                <img class="img-mainlinks" border="0" alt="ASK a Question" src="@Url.Content("~/content/askquestion.jpg")">
+        </div>
+        <div class="col-md-4">
+            <a href="~/Home/MapTickets">
+                <img class="img-mainlinks" border="0" alt="MAP Service Requests" src="@Url.Content("~/content/mapicon.png")">
+        </div>
     </div>
-    <div class="col-md-4">
-        <a href="http://localhost/CCCR/">
-            <img border="0" alt="ASK a Question" src="@Url.Content("~/content/questionicon.png")" width="250" height="250">
-    </div>
-    <div class="col-md-4">
-        <a href="~/Home/MapTickets">
-            <img border="0" alt="MAP Service Requests" src="@Url.Content("~/content/mapicon.png")" width="250" height="250">
-    </div>
-</div>

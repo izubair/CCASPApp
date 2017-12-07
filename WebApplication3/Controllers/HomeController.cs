@@ -49,13 +49,81 @@ namespace WebApplication3.Controllers
         public ActionResult MapTickets()
         {
 
-            var ticketsLoc = db.TicketLocations;
+            //var ticketsLoc = db.TicketLocations;
+
+            var ticketsLoc = from ticket in db.Tickets
+            join ticLoc in db.TicketLocations
+            on ticket.TicketId equals ticLoc.TicketId
+            orderby ticket.DateReported descending, ticket.TimeReported descending
+            select ticLoc;
+            /*
+            var sortedReadings = ticketsLoc.OrderBy(x => x..TimeOfDay)
+                .ThenBy(x => x.DateTimeOfReading.Date)
+                .ThenBy(x => x.DateTimeOfReading.Year);*/
+
+
             //var json = new JavaScriptSerializer().Serialize(ticketsLatLng);
             var ticketsLatLng = ticketsLoc.Select(o => new { o.Latitude, o.Longitude, o.Location });
             Session["MapTicketsJson"] = ticketsLatLng;
 
+            ViewBag.searchDisplay = "block";
+
             return View(ticketsLoc.ToList());
            
+        }
+
+        public ActionResult Top5Catg()
+        {
+
+            //>>>>>>>>> Need to implement this to show top 5 categories for tickets
+            // Might neet to implement as separate view or sub view
+            //>>>>>>>>>>>>>>>>
+            
+            var ticketsLoc = from ticket in db.Tickets
+                             join ticLoc in db.TicketLocations
+                             on ticket.TicketId equals ticLoc.TicketId
+                             orderby ticket.DateReported descending, ticket.TimeReported descending
+                             select ticLoc;
+            /*
+            var sortedReadings = ticketsLoc.OrderBy(x => x..TimeOfDay)
+                .ThenBy(x => x.DateTimeOfReading.Date)
+                .ThenBy(x => x.DateTimeOfReading.Year);*/
+
+
+            //var json = new JavaScriptSerializer().Serialize(ticketsLatLng);
+            var ticketsLatLng = ticketsLoc.Select(o => new { o.Latitude, o.Longitude, o.Location });
+            Session["MapTicketsJson"] = ticketsLatLng;
+
+            ViewBag.searchDisplay = "none";
+
+            return View("MapTickets", ticketsLoc.ToList());
+
+        }
+
+        public ActionResult Last5Requests()
+        {
+
+            //var ticketsLoc = db.TicketLocations;
+
+            var ticketsLoc = (from ticket in db.Tickets
+                             join ticLoc in db.TicketLocations
+                             on ticket.TicketId equals ticLoc.TicketId
+                             orderby ticket.DateReported descending, ticket.TimeReported descending
+                             select ticLoc).Take(5);
+            /*
+            var sortedReadings = ticketsLoc.OrderBy(x => x..TimeOfDay)
+                .ThenBy(x => x.DateTimeOfReading.Date)
+                .ThenBy(x => x.DateTimeOfReading.Year);*/
+
+
+            //var json = new JavaScriptSerializer().Serialize(ticketsLatLng);
+            var ticketsLatLng = ticketsLoc.Select(o => new { o.Latitude, o.Longitude, o.Location });
+            Session["MapTicketsJson"] = ticketsLatLng;
+
+            ViewBag.searchDisplay = "none";
+
+            return View("MapTickets", ticketsLoc.ToList());
+
         }
 
         public ActionResult MapFilteredTickets()
@@ -123,6 +191,8 @@ namespace WebApplication3.Controllers
             //var json = new JavaScriptSerializer().Serialize(ticketsLatLng);
             var ticketsLatLng = ticketsLoc.Select(o => new { o.Latitude, o.Longitude, o.Location });
             Session["MapTicketsJson"] = ticketsLatLng;
+
+            ViewBag.searchDisplay = "block";
 
             return View("MapTickets", ticketsLoc.ToList());
 

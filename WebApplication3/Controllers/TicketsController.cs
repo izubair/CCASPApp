@@ -45,8 +45,11 @@ namespace WebApplication3.Controllers
             ViewBag.IssueAddInfoId = new SelectList(db.IssueAddInfoes, "IssueAddInfoId", "AdditionalInfo");
             ViewBag.IssueDetailId = new SelectList(db.IssueDetails, "IssueDetailId", "Details");
             ViewBag.IssueId = new SelectList(db.Issues, "IssueId", "Description");
+           
+           
             return View();
         }
+       
 
         public ActionResult SetTicketData(string Latitude, string Longitude, string Address, string ParcelNo, string CrossSt1, string CrossSt2, string Jurisdiction)
         {
@@ -59,6 +62,8 @@ namespace WebApplication3.Controllers
             Session["CrossSt1"] = CrossSt1;
             Session["CrossSt2"] = CrossSt2;
             Session["Jurisdiction"] = Jurisdiction;
+
+            Session["ticketType"] = 1;
 
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
@@ -146,21 +151,28 @@ namespace WebApplication3.Controllers
                 ticket.TimeReported = dttm.TimeOfDay;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
-                ticketLoc.Latitude = Convert.ToDouble(Session["Lat"]);
-                ticketLoc.Longitude = Convert.ToDouble(Session["Lng"]);
-                ticketLoc.Location = Convert.ToString(Session["Address"]);
-                ticketLoc.ParcelNo = Convert.ToString(Session["ParcelNo"]);
-                ticketLoc.CrossSt1 = Convert.ToString(Session["CrossSt1"]);
-                ticketLoc.CrossSt2 = Convert.ToString(Session["CrossSt2"]);
-                if (ticketLoc.Location.Contains("Henderson"))
-                    ticketLoc.City = "Henderson";
-                else
-                    ticketLoc.City = "Las Vegas";
-                ticketLoc.State = "NV";
-                // Now use the identity of created ticket 
-                ticketLoc.TicketId = ticket.TicketId;
-                db.TicketLocations.Add(ticketLoc);
-                db.SaveChanges();
+
+                // Only save location if RFS ticket
+                if(Session["TicketType"] != null && Session["TicketType"].ToString() == "1")
+                {
+                    Session["TicketType"] = 0;
+                    ticketLoc.Latitude = Convert.ToDouble(Session["Lat"]);
+                    ticketLoc.Longitude = Convert.ToDouble(Session["Lng"]);
+                    ticketLoc.Location = Convert.ToString(Session["Address"]);
+                    ticketLoc.ParcelNo = Convert.ToString(Session["ParcelNo"]);
+                    ticketLoc.CrossSt1 = Convert.ToString(Session["CrossSt1"]);
+                    ticketLoc.CrossSt2 = Convert.ToString(Session["CrossSt2"]);
+                    if (ticketLoc.Location.Contains("Henderson"))
+                        ticketLoc.City = "Henderson";
+                    else
+                        ticketLoc.City = "Las Vegas";
+                    ticketLoc.State = "NV";
+                    // Now use the identity of created ticket 
+                    ticketLoc.TicketId = ticket.TicketId;
+                    db.TicketLocations.Add(ticketLoc);
+                    db.SaveChanges();
+                }
+                
 
                 return RedirectToAction("Index");
             }
