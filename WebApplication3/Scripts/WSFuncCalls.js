@@ -697,7 +697,7 @@ function GetAddress()
 		//GetAddressFromGoogle(latlonObj.lat, latlonObj.lon, addrObj);
 		// display result
 		//document.getElementById("ResultText").value = "X: " + coords.X + "\nY: " + coords.Y + "\nLatitude: " + latlonObj.lat + "\nLongitude: " + latlonObj.lon; 
-		$('#Result2Text').html("<b>X: </b>" + coords.X + "<br /><b>Y: </b>" + coords.Y + "<br /><b>Latitude: </b>" + latlonObj.lat + "<br /><b>Longitude: </b>" + latlonObj.lon);
+        $('#Result2Text').html("<b>X: </b>" + coords.X + "<br /><b>Y: </b>" + coords.Y + "<br /><b>Latitude: </b>" + latlonObj.lat + "<br /><b>Longitude: </b>" + latlonObj.lon + "<br /><b>Jurisdiction: </b>" + jurisObj.juris);
 	}
 	else{
 			$('#Result2Text').html("<b>ParcelNo: </b>" + parcelno + " is within <i><u>" + jurisObj.juris + "</i></u>");		
@@ -744,10 +744,10 @@ function GetAddressAndParcel()
         addrData.crossSt2 = crossStreet2;
         addrData.jurisdiction = jurisObj.juris; 
 
-        $('#Result1Text').html("<b>X: </b>" + coords.X + "<br /><b>Y: </b>" + coords.Y + "<br /><b>Latitude: </b>" + latlonObj.lat + "<br /><b>Longitude: </b>" + latlonObj.lon + "<br /><b>Location: </b>" + locationObj.loc + "<br /><b>Parcel No: </b>" + parcelNoObj.parcel);
-	}
-	else{
-			$('#Result1Text').html("<b>Cross Streets: </b>" + crossStreet1 + " and " + crossStreet2 + " is within <i><u>" + jurisObj.juris + "</i></u>");		
+        $('#Result1Text').html("<b>X: </b>" + coords.X + "<br /><b>Y: </b>" + coords.Y + "<br /><b>Latitude: </b>" + latlonObj.lat + "<br /><b>Longitude: </b>" + latlonObj.lon + "<br /><b>Location: </b>" + locationObj.loc + "<br /><b>Parcel No: </b>" + parcelNoObj.parcel + "<br /><b>Jurisdiction: </b>" + jurisObj.juris);
+    }   
+	else {
+			$('#Result1Text').html("<b>Cross Streets: </b>" + crossStreet1 + " and " + crossStreet2 + " is within <i><u>" + jurisObj.juris + "</i></u>" + "<br /><b>Parcel No: </b>" + parcelNoObj.parcel);
 	}
 	
 }

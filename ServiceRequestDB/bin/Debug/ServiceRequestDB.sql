@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "ServiceRequestDB"
 :setvar DefaultFilePrefix "ServiceRequestDB"
-:setvar DefaultDataPath "C:\Users\izubair\AppData\Local\Microsoft\VisualStudio\SSDT\WebApplication3"
-:setvar DefaultLogPath "C:\Users\izubair\AppData\Local\Microsoft\VisualStudio\SSDT\WebApplication3"
+:setvar DefaultDataPath "C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\"
+:setvar DefaultLogPath "C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\"
 
 GO
 :on error exit
@@ -37,6 +37,392 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 GO
 USE [$(DatabaseName)];
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET PAGE_VERIFY NONE 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+PRINT N'Creating [dbo].[Depts]...';
+
+
+GO
+CREATE TABLE [dbo].[Depts] (
+    [DeptId]      INT           NOT NULL,
+    [Description] VARCHAR (256) NULL,
+    PRIMARY KEY CLUSTERED ([DeptId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[IssueAddInfo]...';
+
+
+GO
+CREATE TABLE [dbo].[IssueAddInfo] (
+    [IssueAddInfoId] INT           NOT NULL,
+    [IssueID]        INT           NULL,
+    [IssueDetailID]  INT           NULL,
+    [DeptID]         INT           NULL,
+    [AdditionalInfo] VARCHAR (256) NULL,
+    PRIMARY KEY CLUSTERED ([IssueAddInfoId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[IssueDetail]...';
+
+
+GO
+CREATE TABLE [dbo].[IssueDetail] (
+    [IssueDetailId] INT           NOT NULL,
+    [IssueID]       INT           NULL,
+    [DeptID]        INT           NULL,
+    [Details]       VARCHAR (256) NOT NULL,
+    PRIMARY KEY CLUSTERED ([IssueDetailId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Issues]...';
+
+
+GO
+CREATE TABLE [dbo].[Issues] (
+    [IssueId]     INT           NOT NULL,
+    [Description] VARCHAR (256) NOT NULL,
+    PRIMARY KEY CLUSTERED ([IssueId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[TicketLocAdditional]...';
+
+
+GO
+CREATE TABLE [dbo].[TicketLocAdditional] (
+    [TicketLocAddId]   INT IDENTITY (1, 1) NOT NULL,
+    [TicketId]         INT NULL,
+    [JurisdictionCode] INT NOT NULL,
+    [MinorCivilDiv]    INT NOT NULL,
+    [StateAssembly]    INT NOT NULL,
+    [StateSenate]      INT NOT NULL,
+    [CityWard]         INT NOT NULL,
+    [CommissionDist]   INT NOT NULL,
+    [Commissioner]     INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([TicketLocAddId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[TicketLocation]...';
+
+
+GO
+CREATE TABLE [dbo].[TicketLocation] (
+    [TicketLocId] INT           IDENTITY (1, 1) NOT NULL,
+    [TicketId]    INT           NULL,
+    [Latitude]    FLOAT (53)    NOT NULL,
+    [Longitude]   FLOAT (53)    NOT NULL,
+    [HouseNo]     INT           NULL,
+    [Street]      VARCHAR (60)  NULL,
+    [City]        VARCHAR (30)  NOT NULL,
+    [State]       VARCHAR (30)  NOT NULL,
+    [PostalCode]  VARCHAR (30)  NULL,
+    [Country]     VARCHAR (60)  NULL,
+    [Location]    VARCHAR (256) NOT NULL,
+    [ParcelNo]    VARCHAR (30)  NULL,
+    [CrossSt1]    VARCHAR (30)  NULL,
+    [CrossSt2]    VARCHAR (30)  NULL,
+    PRIMARY KEY CLUSTERED ([TicketLocId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Tickets]...';
+
+
+GO
+CREATE TABLE [dbo].[Tickets] (
+    [TicketId]       INT            IDENTITY (1, 1) NOT NULL,
+    [Subject]        VARCHAR (132)  NOT NULL,
+    [ConstituentID]  NVARCHAR (128) NULL,
+    [Service]        INT            NOT NULL,
+    [IssueId]        INT            NULL,
+    [IssueDetailId]  INT            NULL,
+    [IssueAddInfoId] INT            NULL,
+    [Description]    VARCHAR (256)  NOT NULL,
+    [DateReported]   DATE           NULL,
+    [TimeReported]   TIME (7)       NULL,
+    [TicketStatus]   INT            NOT NULL,
+    PRIMARY KEY CLUSTERED ([TicketId] ASC)
+);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocAdditional]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocAdditional]
+    ADD DEFAULT 1 FOR [JurisdictionCode];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocAdditional]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocAdditional]
+    ADD DEFAULT 1 FOR [MinorCivilDiv];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocAdditional]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocAdditional]
+    ADD DEFAULT 1 FOR [StateAssembly];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocAdditional]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocAdditional]
+    ADD DEFAULT 1 FOR [StateSenate];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocAdditional]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocAdditional]
+    ADD DEFAULT 1 FOR [CityWard];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocAdditional]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocAdditional]
+    ADD DEFAULT 1 FOR [CommissionDist];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocAdditional]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocAdditional]
+    ADD DEFAULT 1 FOR [Commissioner];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Tickets]...';
+
+
+GO
+ALTER TABLE [dbo].[Tickets]
+    ADD DEFAULT 0 FOR [Service];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Tickets]...';
+
+
+GO
+ALTER TABLE [dbo].[Tickets]
+    ADD DEFAULT 1 FOR [TicketStatus];
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[IssueAddInfo]...';
+
+
+GO
+ALTER TABLE [dbo].[IssueAddInfo] WITH NOCHECK
+    ADD FOREIGN KEY ([IssueID]) REFERENCES [dbo].[Issues] ([IssueId]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[IssueAddInfo]...';
+
+
+GO
+ALTER TABLE [dbo].[IssueAddInfo] WITH NOCHECK
+    ADD FOREIGN KEY ([IssueDetailID]) REFERENCES [dbo].[IssueDetail] ([IssueDetailId]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[IssueAddInfo]...';
+
+
+GO
+ALTER TABLE [dbo].[IssueAddInfo] WITH NOCHECK
+    ADD FOREIGN KEY ([DeptID]) REFERENCES [dbo].[Depts] ([DeptId]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[IssueDetail]...';
+
+
+GO
+ALTER TABLE [dbo].[IssueDetail] WITH NOCHECK
+    ADD FOREIGN KEY ([IssueID]) REFERENCES [dbo].[Issues] ([IssueId]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[IssueDetail]...';
+
+
+GO
+ALTER TABLE [dbo].[IssueDetail] WITH NOCHECK
+    ADD FOREIGN KEY ([DeptID]) REFERENCES [dbo].[Depts] ([DeptId]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocAdditional]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocAdditional] WITH NOCHECK
+    ADD FOREIGN KEY ([TicketId]) REFERENCES [dbo].[Tickets] ([TicketId]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[TicketLocation]...';
+
+
+GO
+ALTER TABLE [dbo].[TicketLocation] WITH NOCHECK
+    ADD FOREIGN KEY ([TicketId]) REFERENCES [dbo].[Tickets] ([TicketId]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Tickets]...';
+
+
+GO
+ALTER TABLE [dbo].[Tickets] WITH NOCHECK
+    ADD FOREIGN KEY ([IssueId]) REFERENCES [dbo].[Issues] ([IssueId]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Tickets]...';
+
+
+GO
+ALTER TABLE [dbo].[Tickets] WITH NOCHECK
+    ADD FOREIGN KEY ([IssueDetailId]) REFERENCES [dbo].[IssueDetail] ([IssueDetailId]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Tickets]...';
+
+
+GO
+ALTER TABLE [dbo].[Tickets] WITH NOCHECK
+    ADD FOREIGN KEY ([IssueAddInfoId]) REFERENCES [dbo].[IssueAddInfo] ([IssueAddInfoId]);
+
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+CREATE TABLE [#__checkStatus] (
+    id           INT            IDENTITY (1, 1) PRIMARY KEY CLUSTERED,
+    [Schema]     NVARCHAR (256),
+    [Table]      NVARCHAR (256),
+    [Constraint] NVARCHAR (256)
+);
+
+SET NOCOUNT ON;
+
+DECLARE tableconstraintnames CURSOR LOCAL FORWARD_ONLY
+    FOR SELECT SCHEMA_NAME([schema_id]),
+               OBJECT_NAME([parent_object_id]),
+               [name],
+               0
+        FROM   [sys].[objects]
+        WHERE  [parent_object_id] IN (OBJECT_ID(N'dbo.IssueAddInfo'), OBJECT_ID(N'dbo.IssueDetail'), OBJECT_ID(N'dbo.TicketLocAdditional'), OBJECT_ID(N'dbo.TicketLocation'), OBJECT_ID(N'dbo.Tickets'))
+               AND [type] IN (N'F', N'C')
+                   AND [object_id] IN (SELECT [object_id]
+                                       FROM   [sys].[check_constraints]
+                                       WHERE  [is_not_trusted] <> 0
+                                              AND [is_disabled] = 0
+                                       UNION
+                                       SELECT [object_id]
+                                       FROM   [sys].[foreign_keys]
+                                       WHERE  [is_not_trusted] <> 0
+                                              AND [is_disabled] = 0);
+
+DECLARE @schemaname AS NVARCHAR (256);
+
+DECLARE @tablename AS NVARCHAR (256);
+
+DECLARE @checkname AS NVARCHAR (256);
+
+DECLARE @is_not_trusted AS INT;
+
+DECLARE @statement AS NVARCHAR (1024);
+
+BEGIN TRY
+    OPEN tableconstraintnames;
+    FETCH tableconstraintnames INTO @schemaname, @tablename, @checkname, @is_not_trusted;
+    WHILE @@fetch_status = 0
+        BEGIN
+            PRINT N'Checking constraint: ' + @checkname + N' [' + @schemaname + N'].[' + @tablename + N']';
+            SET @statement = N'ALTER TABLE [' + @schemaname + N'].[' + @tablename + N'] WITH ' + CASE @is_not_trusted WHEN 0 THEN N'CHECK' ELSE N'NOCHECK' END + N' CHECK CONSTRAINT [' + @checkname + N']';
+            BEGIN TRY
+                EXECUTE [sp_executesql] @statement;
+            END TRY
+            BEGIN CATCH
+                INSERT  [#__checkStatus] ([Schema], [Table], [Constraint])
+                VALUES                  (@schemaname, @tablename, @checkname);
+            END CATCH
+            FETCH tableconstraintnames INTO @schemaname, @tablename, @checkname, @is_not_trusted;
+        END
+END TRY
+BEGIN CATCH
+    PRINT ERROR_MESSAGE();
+END CATCH
+
+IF CURSOR_STATUS(N'LOCAL', N'tableconstraintnames') >= 0
+    CLOSE tableconstraintnames;
+
+IF CURSOR_STATUS(N'LOCAL', N'tableconstraintnames') = -1
+    DEALLOCATE tableconstraintnames;
+
+SELECT N'Constraint verification failed:' + [Schema] + N'.' + [Table] + N',' + [Constraint]
+FROM   [#__checkStatus];
+
+IF @@ROWCOUNT > 0
+    BEGIN
+        DROP TABLE [#__checkStatus];
+        RAISERROR (N'An error occurred while verifying constraints', 16, 127);
+    END
+
+SET NOCOUNT OFF;
+
+DROP TABLE [#__checkStatus];
 
 
 GO

@@ -196,6 +196,8 @@ namespace WebApplication3.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
+        [ValidateInput(false)]
+
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -245,6 +247,7 @@ namespace WebApplication3.Controllers
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
+        [ValidateInput(false)]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -287,6 +290,7 @@ namespace WebApplication3.Controllers
         //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
+        [ValidateInput(false)]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -509,7 +513,7 @@ namespace WebApplication3.Controllers
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
                new { userId = userID, code = code }, protocol: Request.Url.Scheme);
             await UserManager.SendEmailAsync(userID, subject,
-               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+               "Please confirm your account by clicking here <a href=\"" + callbackUrl + "\">");
 
             return callbackUrl;
         }

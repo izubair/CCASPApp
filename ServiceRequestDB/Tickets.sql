@@ -9,5 +9,6 @@
 	IssueAddInfoId INT FOREIGN KEY references IssueAddInfo(IssueAddInfoId),
 	[Description] VARCHAR(256) NOT NULL,
 	DateReported Date NULL,
-	TimeReported Time NULL
+	TimeReported Time NULL,
+	TicketStatus INT NOT NULL DEFAULT 1
 )
